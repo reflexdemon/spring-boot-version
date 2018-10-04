@@ -62,13 +62,4 @@ public class ErrorResponse {
         this.message = message;
     }
 
-
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("ErrorResponse{");
-        sb.append("code='").append(code).append('\'');
-        sb.append(", message='").append(message).append('\'');
-        sb.append('}');
-        return sb.toString();
-    }
 }

@@ -18,6 +18,40 @@ import java.util.stream.Collectors;
 public class BootVersionService {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+
+    public List<String> getVersionList() {
+        List<String> versions = null;
+        try {
+            logger.debug("Listing Spring Versions");
+            String url = "https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-parent";
+            Document document = null;
+
+            document = Jsoup.connect(url).get();
+            Elements allTables =
+                    document.select(".grid").select(".versions");
+                    versions = allTables.
+                            select("a").
+                            parallelStream().
+                            map( element -> {
+                                logger.info("element:" + element);
+                                if (null != element && element.hasClass("vbtn")) {
+                                    return element.text();
+                                } else {
+                                    return null;
+                                }
+                            }
+                    ).
+                    filter(item -> item != null)
+                    .collect(Collectors.toList());
+        } catch (Exception  e) {
+            logger.error("Problem while getting the list of spring boot versions", e);
+            throw new RuntimeException("Problem while getting the list of spring boot versions", e);
+        }
+
+        return versions;
+    }
+
     public List<Dependency> getDependencies(final String bootVersion) {
         List<Dependency> dependencies = null;
         try {

@@ -35,20 +35,6 @@ public class Dependency {
         return bootVersion;
     }
 
-    /**
-     * Sets boot version.
-     *
-     * @param bootVersion the boot version
-     */
-    public void setBootVersion(String bootVersion) {
-        this.bootVersion = bootVersion;
-    }
-
-    /**
-     * Instantiates a new Dependency.
-     */
-    public Dependency() {
-    }
 
     /**
      * Gets group id.
@@ -57,15 +43,6 @@ public class Dependency {
      */
     public String getGroupId() {
         return groupId;
-    }
-
-    /**
-     * Sets group id.
-     *
-     * @param groupId the group id
-     */
-    public void setGroupId(String groupId) {
-        this.groupId = groupId;
     }
 
     /**
@@ -78,30 +55,12 @@ public class Dependency {
     }
 
     /**
-     * Sets artifact id.
-     *
-     * @param artifactId the artifact id
-     */
-    public void setArtifactId(String artifactId) {
-        this.artifactId = artifactId;
-    }
-
-    /**
      * Gets version.
      *
      * @return the version
      */
     public String getVersion() {
         return version;
-    }
-
-    /**
-     * Sets version.
-     *
-     * @param version the version
-     */
-    public void setVersion(String version) {
-        this.version = version;
     }
 
 

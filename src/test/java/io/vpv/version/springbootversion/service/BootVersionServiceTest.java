@@ -1,9 +1,12 @@
 package io.vpv.version.springbootversion.service;
 
 import io.vpv.version.springbootversion.SpringBootVersionApplicationTests;
+import io.vpv.version.springbootversion.modal.Dependency;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
+
+import java.util.List;
 
 /**
  * Created by vprasanna on 6/12/18.
@@ -25,8 +28,17 @@ public class BootVersionServiceTest extends SpringBootVersionApplicationTests {
     public void testGetDependencies() throws Exception {
 
         for (String bootVersion :SPRING_BOOT_VERSIONS) {
-            Assert.notEmpty(bootVersionService.getDependencies(bootVersion), "The list is not empty.");
+            List<Dependency> output = bootVersionService.getDependencies(bootVersion);
+            System.out.println("output:" + output);
+            Assert.notEmpty(output, "The list is empty.");
         }
 
+    }
+
+    @Test
+    public void testGetVersionList() throws Exception {
+        List<String> versionList = bootVersionService.getVersionList();
+        System.out.println("output:" + versionList);
+        Assert.notEmpty(versionList, "The list is empty.");
     }
 }

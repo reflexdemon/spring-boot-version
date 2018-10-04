@@ -43,4 +43,18 @@ public class RESTBootVersionServiceTest extends SpringBootVersionApplicationTest
         Assert.notNull(result, "Should throw Error for invalid request");
 
     }
+
+
+    @Test
+    public void shouldReturnValidReleases() throws Exception {
+        List<Dependency> result =
+                this.webClient.get()
+                        .uri("/api/releases")
+                        .exchange()
+                        .expectStatus().isOk()
+                        .expectBody(List.class)
+                        .returnResult().getResponseBody();
+
+        Assert.notEmpty(result, "This should return valid list of versions");
+    }
 }

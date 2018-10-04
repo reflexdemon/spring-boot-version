@@ -16,7 +16,7 @@ import java.util.List;
  * Created by vprasanna on 6/12/18.
  */
 @RestController
-@RequestMapping("/api/dependency")
+@RequestMapping("/api")
 public class RESTBootVersionService {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private BootVersionService bootVersionService;
@@ -26,13 +26,19 @@ public class RESTBootVersionService {
         this.bootVersionService = bootVersionService;
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "/{bootVersion}")
+    @RequestMapping(method = RequestMethod.GET, path = "/dependency/{bootVersion}")
     public ResponseEntity<List<Dependency>> getDependenciesForVersion(@PathVariable final String bootVersion) {
-        logger.debug("GET Boot Version API called");
+        logger.debug("GET Boot Dependency Version API called");
             List<Dependency> dependencies = bootVersionService.getDependencies(bootVersion);
             return new ResponseEntity<>(dependencies, HttpStatus.OK);
     }
 
+    @RequestMapping(method = RequestMethod.GET, path = "/releases")
+    public ResponseEntity<List<String>> getBootVersion() {
+        logger.debug("GET Boot Version API called");
+        List<String> list = bootVersionService.getVersionList();
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> error(Exception ex) {
         logger.error("Exception raised " + ex);
