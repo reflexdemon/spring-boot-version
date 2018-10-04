@@ -39,6 +39,20 @@ public class RESTBootVersionService {
         List<String> list = bootVersionService.getVersionList();
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
+
+    @RequestMapping(method = RequestMethod.GET, path = "/milestones")
+    public ResponseEntity<List<String>> getMileStoneVersionList() {
+        logger.debug("GET Boot Version API called");
+        List<String> list = bootVersionService.getMileStoneVersionList();
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, path = "/snapshot")
+    public ResponseEntity<List<String>> getSnapshotVersionList() {
+        logger.debug("GET Boot Version API called");
+        List<String> list = bootVersionService.getSnapshotVersionList();
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> error(Exception ex) {
         logger.error("Exception raised " + ex);
