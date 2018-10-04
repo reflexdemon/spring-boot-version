@@ -2,6 +2,7 @@ package io.vpv.version.springbootversion.controller.api;
 
 import io.vpv.version.springbootversion.modal.Dependency;
 import io.vpv.version.springbootversion.modal.ErrorResponse;
+import io.vpv.version.springbootversion.modal.VersionInfo;
 import io.vpv.version.springbootversion.service.BootVersionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,6 +54,14 @@ public class RESTBootVersionService {
         List<String> list = bootVersionService.getSnapshotVersionList();
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
+
+    @RequestMapping(method = RequestMethod.GET, path = "/versions")
+    public ResponseEntity<VersionInfo> getAllVersionInfo() {
+        logger.debug("GET Boot Version API called");
+        VersionInfo list = bootVersionService.getAllVersionInfo();
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> error(Exception ex) {
         logger.error("Exception raised " + ex);

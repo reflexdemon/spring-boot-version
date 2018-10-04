@@ -3,6 +3,7 @@ package io.vpv.version.springbootversion.controller.api;
 import io.vpv.version.springbootversion.SpringBootVersionApplicationTests;
 import io.vpv.version.springbootversion.modal.Dependency;
 import io.vpv.version.springbootversion.modal.ErrorResponse;
+import io.vpv.version.springbootversion.modal.VersionInfo;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.reactive.server.WebTestClient;
@@ -56,5 +57,46 @@ public class RESTBootVersionServiceTest extends SpringBootVersionApplicationTest
                         .returnResult().getResponseBody();
 
         Assert.notEmpty(result, "This should return valid list of versions");
+    }
+
+
+    @Test
+    public void shouldReturnValidSnapshots() throws Exception {
+        List<Dependency> result =
+                this.webClient.get()
+                        .uri("/api/snapshot")
+                        .exchange()
+                        .expectStatus().isOk()
+                        .expectBody(List.class)
+                        .returnResult().getResponseBody();
+
+        Assert.notEmpty(result, "This should return valid list of versions");
+    }
+
+    @Test
+    public void shouldReturnValidMilestones() throws Exception {
+        List<Dependency> result =
+                this.webClient.get()
+                        .uri("/api/milestones")
+                        .exchange()
+                        .expectStatus().isOk()
+                        .expectBody(List.class)
+                        .returnResult().getResponseBody();
+
+        Assert.notEmpty(result, "This should return valid list of versions");
+    }
+
+    @Test
+    public void shouldReturnValidVersions() throws Exception {
+        VersionInfo result =
+                this.webClient.get()
+                        .uri("/api/versions")
+                        .exchange()
+                        .expectStatus().isOk()
+                        .expectBody(VersionInfo.class)
+                        .returnResult().getResponseBody();
+
+        Assert.notEmpty(result.getMilestones(), "This should return valid list of versions");
+        Assert.notEmpty(result.getSnapshots(), "This should return valid list of versions");
     }
 }
