@@ -100,6 +100,7 @@ public class BootVersionService {
                             ).
                             filter(item -> item != null).
                             filter(item -> !item.contains("..")).
+                            filter(item -> !item.contains("maven")).
                             map(value -> value.substring(0, value.length() - 1)).
                             collect(toList());
         } catch (Exception e) {
