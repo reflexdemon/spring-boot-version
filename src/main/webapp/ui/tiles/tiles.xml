@@ -1,0 +1,13 @@
+<tiles-definitions>
+
+    <definition name="mainLayout" template="/ui/jsp/layout/main.jsp">
+        <put-attribute name="header" value="/ui/jsp/layout/header.jsp" />
+        <put-attribute name="body" value="" />
+        <put-attribute name="footer" value="/ui/jsp/layout/footer.jsp" />
+    </definition>
+
+    <definition name="dashboard" extends="mainLayout">
+        <put-attribute name="body" value="/ui/jsp/view/dashboard.jsp" />
+    </definition>
+
+</tiles-definitions>
