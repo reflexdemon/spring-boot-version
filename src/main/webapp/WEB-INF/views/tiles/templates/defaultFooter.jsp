@@ -1,1 +1,1 @@
-<footer>copyright © vpv.io</footer>
+<footer>Copyright &copy; <a href="https:/vpv.io">vpv.io</a></footer>

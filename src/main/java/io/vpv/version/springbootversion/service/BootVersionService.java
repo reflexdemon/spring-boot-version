@@ -4,12 +4,14 @@ import io.vpv.version.springbootversion.modal.Dependency;
 import io.vpv.version.springbootversion.modal.VersionInfo;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.function.Function;
 
 import static java.util.stream.Collectors.toList;
 
@@ -123,18 +125,7 @@ public class BootVersionService {
             Elements allTables =
                     document.select(".informaltable");
             dependencies = allTables.select("tr").parallelStream().map(
-                    element -> {
-                        List<String> values = element.select("td").eachText();
-                        if (values.size() >= 3) {
-                            String groupId = values.get(0);
-                            String artifactId = values.get(1);
-                            String version = values.get(2);
-                            Dependency dependency = new Dependency(bootVersion, groupId, artifactId, version);
-//                            dependencies.add(dependency);
-                            return dependency;
-                        }
-                        return null;
-                    }
+                    getTd(bootVersion)
             ).filter(item -> item != null)
                     .collect(toList());
         } catch (Exception  e) {
@@ -142,6 +133,21 @@ public class BootVersionService {
             throw new RuntimeException("Problem while getting the dependencies for " + bootVersion, e);
         }
         return dependencies;
+    }
+
+    private Function<Element, Dependency> getTd(String bootVersion) {
+        return element -> {
+            List<String> values = element.select("td").eachText();
+            if (values.size() >= 3) {
+                String groupId = values.get(0);
+                String artifactId = values.get(1);
+                String version = values.get(2);
+                Dependency dependency = new Dependency(bootVersion, groupId, artifactId, version);
+//                            dependencies.add(dependency);
+                return dependency;
+            }
+            return null;
+        };
     }
 
 }

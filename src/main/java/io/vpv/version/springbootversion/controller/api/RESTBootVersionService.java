@@ -27,7 +27,7 @@ public class RESTBootVersionService {
         this.bootVersionService = bootVersionService;
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "/dependency/{bootVersion}")
+    @RequestMapping(method = RequestMethod.GET, path = "/dependency/{bootVersion:.+}")
     public ResponseEntity<List<Dependency>> getDependenciesForVersion(@PathVariable final String bootVersion) {
         logger.debug("GET Boot Dependency Version API called");
             List<Dependency> dependencies = bootVersionService.getDependencies(bootVersion);
