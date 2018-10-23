@@ -10,6 +10,7 @@ public class AboutController {
 
     @RequestMapping(value = {"/about"}, method = RequestMethod.GET)
     public String dependencyPage(ModelMap model) {
+        model.put("viewName", "about");
         return "about";
     }
 }

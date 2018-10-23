@@ -7,6 +7,6 @@
     <title>Home</title>
 </head>
 <body>
-<h2>View Spring Boot Dependency list</h2>
+<h2>Dependency</h2>
 </body>
 </html>

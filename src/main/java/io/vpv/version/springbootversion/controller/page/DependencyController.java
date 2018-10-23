@@ -10,6 +10,7 @@ public class DependencyController {
 
     @RequestMapping(value = {"/dependency"}, method = RequestMethod.GET)
     public String dependencyPage(ModelMap model) {
+        model.put("viewName", "dependency");
         return "dependency";
     }
 }

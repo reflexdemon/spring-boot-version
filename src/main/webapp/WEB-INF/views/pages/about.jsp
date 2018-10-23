@@ -7,14 +7,15 @@
     <title>Home</title>
 </head>
 <body>
-<h2>Spring Boot Version Tool</h2>
-<table>
-    <tr>
-        <th>Purpose</th>
-        <th>
-            This is
-        </th>
-    </tr>
-</table>
+<div class="card">
+    <div class="card-header">
+        About
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">Purpose</h5>
+        <p class="card-text">This is a simple tool that actually lists all the spring boot versions and its dependencies.</p>
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+    </div>
+</div>
 </body>
 </html>

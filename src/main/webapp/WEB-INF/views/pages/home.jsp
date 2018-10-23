@@ -7,6 +7,11 @@
     <title>Home</title>
 </head>
 <body>
-<h2>Welcome to Spring Boot Version Tools</h2>
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4">Boot Tree</h1>
+        <p class="lead">This is a simple tool to list all the dependencies for the Spring Boot project...</p>
+    </div>
+</div>
 </body>
 </html>
