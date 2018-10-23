@@ -8,6 +8,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,6 +25,7 @@ public class BootVersionService {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 
+    @Cacheable("versionlist")
     public List<String> getVersionList() {
         List<String> versions = null;
         try {
@@ -56,6 +58,7 @@ public class BootVersionService {
         return versions;
     }
 
+    @Cacheable("milestonelist")
     public List<String> getMileStoneVersionList() {
         List<String> versions = null;
         logger.debug("Listing Milestone Spring Boot Versions");
@@ -65,6 +68,7 @@ public class BootVersionService {
         return versions;
     }
 
+    @Cacheable("snapshotlist")
     public List<String> getSnapshotVersionList() {
         List<String> versions = null;
         logger.debug("Listing Snapshot Spring Boot Versions");
@@ -74,6 +78,7 @@ public class BootVersionService {
     }
 
 
+    @Cacheable("versioninfo")
     public VersionInfo getAllVersionInfo() {
         VersionInfo versions = new VersionInfo(getMileStoneVersionList(), getSnapshotVersionList());
         return versions;
@@ -112,6 +117,7 @@ public class BootVersionService {
         return versions;
     }
 
+    @Cacheable(value = "dependency", key = "#bootVersion")
     public List<Dependency> getDependencies(final String bootVersion) {
         List<Dependency> dependencies = null;
         try {

@@ -17,8 +17,14 @@
             </li>
 
         </ul>
+
         <%--<form class="form-inline my-2 my-lg-0">--%>
-            <%--<input class="form-control mr-sm-2" placeholder="Search" type="text">--%>
+        <%--<select class="form-control mr-sm-2 selectpicker">--%>
+        <%--<option>darkly</option>--%>
+        <%--<option>sketchy</option>--%>
+        <%--<option>superhero</option>--%>
+        <%--</select>--%>
+        <%--&lt;%&ndash;<input class="form-control mr-sm-2" placeholder="Search" type="text">&ndash;%&gt;--%>
             <%--<button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>--%>
         <%--</form>--%>
     </div>
