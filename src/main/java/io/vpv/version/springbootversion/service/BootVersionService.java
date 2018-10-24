@@ -83,7 +83,14 @@ public class BootVersionService {
         VersionInfo versions = new VersionInfo(getMileStoneVersionList(), getSnapshotVersionList());
         return versions;
     }
-
+    @Cacheable("docVersions")
+    public List<String> getDocumentedVersionList() {
+        List<String> versions = null;
+        logger.debug("Listing Documented Spring Boot Versions");
+        String url = "https://docs.spring.io/spring-boot/docs/";
+        versions = getVersionsFromURL(url);
+        return versions;
+    }
     private List<String> getVersionsFromURL(String url) {
         List<String> versions;
         try {
@@ -108,6 +115,7 @@ public class BootVersionService {
                             filter(item -> item != null).
                             filter(item -> !item.contains("..")).
                             filter(item -> !item.contains("maven")).
+                            filter(item -> (item.indexOf('.') > 0)).
                             map(value -> value.substring(0, value.length() - 1)).
                             collect(toList());
         } catch (Exception e) {

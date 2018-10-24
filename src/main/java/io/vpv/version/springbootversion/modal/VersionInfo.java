@@ -15,9 +15,6 @@ public class VersionInfo {
         this.snapshots = snapshots;
     }
 
-    public VersionInfo() {
-    }
-
     public List<String> getMilestones() {
         return milestones;
     }

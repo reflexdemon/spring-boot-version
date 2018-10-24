@@ -20,11 +20,6 @@ public class ErrorResponse {
         this.message = message;
     }
 
-    /**
-     * Instantiates a new Error response.
-     */
-    public ErrorResponse() {
-    }
 
     /**
      * Gets code.
@@ -36,30 +31,12 @@ public class ErrorResponse {
     }
 
     /**
-     * Sets code.
-     *
-     * @param code the code
-     */
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    /**
      * Gets message.
      *
      * @return the message
      */
     public String getMessage() {
         return message;
-    }
-
-    /**
-     * Sets message.
-     *
-     * @param message the message
-     */
-    public void setMessage(String message) {
-        this.message = message;
     }
 
 }
