@@ -17,8 +17,7 @@ import java.util.List;
  * Created by vprasanna on 6/12/18.
  */
 @RestController
-@RequestMapping("/api")
-public class RESTBootVersionService {
+public class RESTBootVersionService extends RESTBaseClass {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private BootVersionService bootVersionService;
 
@@ -62,10 +61,4 @@ public class RESTBootVersionService {
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorResponse> error(Exception ex) {
-        logger.error("Exception raised " + ex);
-        ErrorResponse response = new ErrorResponse("001", ex.getMessage());
-        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
 }

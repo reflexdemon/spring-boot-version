@@ -142,7 +142,7 @@ public class Artifact {
         sb.append(", artifactId='").append(artifactId).append('\'');
         sb.append(", firstArtifactVersion='").append(firstArtifactVersion).append('\'');
         sb.append(", secondArtifactVersion='").append(secondArtifactVersion).append('\'');
-        sb.append(", change=").append(change);
+        sb.append(", change=").append(getChange());
         sb.append('}');
         return sb.toString();
     }

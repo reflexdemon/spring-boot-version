@@ -12,6 +12,9 @@
             <li class="nav-item ${viewName == 'dependency' ? 'active' : ''}">
                 <a class="nav-link" href="${pageContext.request.contextPath}/dependency">Dependency</a>
             </li>
+            <li class="nav-item ${viewName == 'compare' ? 'active' : ''}">
+                <a class="nav-link" href="${pageContext.request.contextPath}/compare">Compare</a>
+            </li>
             <li class="nav-item ${viewName == 'about' ? 'active' : ''}">
                 <a class="nav-link" href="${pageContext.request.contextPath}/about">About</a>
             </li>
