@@ -57,6 +57,12 @@ public class BootVersionServiceTest extends SpringBootVersionApplicationTests {
         Assert.notEmpty(versionList, "The list is empty.");
     }
 
+    @Test
+    public void testGetSDocVersionList() throws Exception {
+        List<String> versionList = bootVersionService.getDocumentedVersionList();
+        System.out.println("output:" + versionList);
+        Assert.notEmpty(versionList, "The list is empty.");
+    }
 
     @Test
     public void testAllVersions() throws Exception {

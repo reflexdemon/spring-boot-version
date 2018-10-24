@@ -45,12 +45,6 @@ public class Artifact {
     }
 
     /**
-     * Instantiates a new Artifact.
-     */
-    public Artifact() {
-    }
-
-    /**
      * Gets group id.
      *
      * @return the group id
@@ -59,14 +53,6 @@ public class Artifact {
         return groupId;
     }
 
-    /**
-     * Sets group id.
-     *
-     * @param groupId the group id
-     */
-    public void setGroupId(String groupId) {
-        this.groupId = groupId;
-    }
 
     /**
      * Gets artifact id.
@@ -78,15 +64,6 @@ public class Artifact {
     }
 
     /**
-     * Sets artifact id.
-     *
-     * @param artifactId the artifact id
-     */
-    public void setArtifactId(String artifactId) {
-        this.artifactId = artifactId;
-    }
-
-    /**
      * Gets first artifact version.
      *
      * @return the first artifact version
@@ -95,14 +72,6 @@ public class Artifact {
         return firstArtifactVersion;
     }
 
-    /**
-     * Sets first artifact version.
-     *
-     * @param firstArtifactVersion the first artifact version
-     */
-    public void setFirstArtifactVersion(String firstArtifactVersion) {
-        this.firstArtifactVersion = firstArtifactVersion;
-    }
 
     /**
      * Gets second artifact version.
@@ -113,14 +82,6 @@ public class Artifact {
         return secondArtifactVersion;
     }
 
-    /**
-     * Sets second artifact version.
-     *
-     * @param secondArtifactVersion the second artifact version
-     */
-    public void setSecondArtifactVersion(String secondArtifactVersion) {
-        this.secondArtifactVersion = secondArtifactVersion;
-    }
 
     public Change getChange() {
         if (this.secondArtifactVersion == null) {

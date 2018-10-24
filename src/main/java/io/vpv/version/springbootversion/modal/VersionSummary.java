@@ -67,15 +67,6 @@ public class VersionSummary {
         return artifacts;
     }
 
-    /**
-     * Sets artifacts.
-     *
-     * @param artifacts the artifacts
-     */
-    public void setArtifacts(List<Artifact> artifacts) {
-        this.artifacts = artifacts;
-    }
-
 
     @Override
     public String toString() {
