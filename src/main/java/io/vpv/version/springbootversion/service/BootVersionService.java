@@ -8,6 +8,8 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -20,9 +22,29 @@ import static java.util.stream.Collectors.toList;
  * Created by vprasanna on 6/12/18.
  */
 @Service
+@ConfigurationProperties("io.vpv")
 public class BootVersionService {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    @Value("${io.vpv.version.endpoint.versionlist}")
+    private String versionlist;
+
+    @Value("${io.vpv.version.endpoint.milestonelist}")
+    private String milestonelist;
+
+    @Value("${io.vpv.version.endpoint.snapshotlist}")
+    private String snapshotlist;
+
+    @Value("${io.vpv.version.endpoint.docVersions}")
+    private String docVersions;
+
+    @Value("${io.vpv.version.endpoint.dependency.base}")
+    private String basePath;
+
+    @Value("${io.vpv.version.endpoint.dependency.dependencyPage}")
+    private String dependencyPage;
+
 
 
     @Cacheable("versionlist")
@@ -30,10 +52,9 @@ public class BootVersionService {
         List<String> versions = null;
         try {
             logger.debug("Listing Spring Versions");
-            String url = "https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-parent";
             Document document = null;
 
-            document = Jsoup.connect(url).get();
+            document = Jsoup.connect(versionlist).get();
             Elements allTables =
                     document.select(".grid").select(".versions");
                     versions = allTables.
@@ -62,9 +83,7 @@ public class BootVersionService {
     public List<String> getMileStoneVersionList() {
         List<String> versions = null;
         logger.debug("Listing Milestone Spring Boot Versions");
-        String url = "https://repo.spring.io/milestone/org/springframework/boot/spring-boot-starter/";
-        versions = getVersionsFromURL(url);
-
+        versions = getVersionsFromURL(milestonelist);
         return versions;
     }
 
@@ -72,8 +91,7 @@ public class BootVersionService {
     public List<String> getSnapshotVersionList() {
         List<String> versions = null;
         logger.debug("Listing Snapshot Spring Boot Versions");
-        String url = "https://repo.spring.io/snapshot/org/springframework/boot/spring-boot-starter/";
-        versions = getVersionsFromURL(url);
+        versions = getVersionsFromURL(snapshotlist);
         return versions;
     }
 
@@ -83,15 +101,17 @@ public class BootVersionService {
         VersionInfo versions = new VersionInfo(getMileStoneVersionList(), getSnapshotVersionList());
         return versions;
     }
+
     @Cacheable("docVersions")
     public List<String> getDocumentedVersionList() {
         List<String> versions = null;
         logger.debug("Listing Documented Spring Boot Versions");
-        String url = "https://docs.spring.io/spring-boot/docs/";
-        versions = getVersionsFromURL(url);
+        versions = getVersionsFromURL(docVersions);
         return versions;
     }
+
     private List<String> getVersionsFromURL(String url) {
+        logger.info("Making HTTP Call to {}", url);
         List<String> versions;
         try {
             Document document = null;
@@ -130,9 +150,7 @@ public class BootVersionService {
         List<Dependency> dependencies = null;
         try {
             logger.debug("Searching dependencies for {}", bootVersion);
-            String url = "https://docs.spring.io/spring-boot/docs/"
-                    + bootVersion
-                    + "/reference/html/appendix-dependency-versions.html";
+            String url = basePath + bootVersion + dependencyPage;
             Document document = null;
 
             document = Jsoup.connect(url).get();
