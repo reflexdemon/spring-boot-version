@@ -9,7 +9,6 @@ import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +21,6 @@ import static java.util.stream.Collectors.toList;
  * Created by vprasanna on 6/12/18.
  */
 @Service
-@ConfigurationProperties("io.vpv")
 public class BootVersionService {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -122,20 +120,11 @@ public class BootVersionService {
             versions = allTables.
 //                    next().//We need the second element
 //                    select("a").
-        parallelStream().
-                            map(element -> {
-                                        logger.info("Mile Stone: element:" + element);
-                                        if (null != element) {
-                                            return element.text();
-                                        } else {
-                                            return null;
-                                        }
-                                    }
-                            ).
-                            filter(item -> item != null).
-                            filter(item -> !item.contains("..")).
-                            filter(item -> !item.contains("maven")).
-                            filter(item -> (item.indexOf('.') > 0)).
+        parallelStream().filter(element -> element != null).
+                            map(element -> element.text()).
+                            filter(text -> !text.contains("..")).
+                            filter(text -> !text.contains("maven")).
+                            filter(text -> (text.indexOf('.') > 0)).
                             map(value -> value.substring(0, value.length() - 1)).
                             collect(toList());
         } catch (Exception e) {
