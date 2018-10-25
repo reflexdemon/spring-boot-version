@@ -23,16 +23,9 @@
                 <span class="col-6 text-right">Please select a version</span>
             <span class="col-6">
                 <select class="selectpicker" data-live-search="true" id="bootVersion" name="bootVersion">
-                    <optgroup label="Milestones">
-                        <c:forEach var="version" items="${versionInfo.milestones}">
-                            <option ${bootVersion eq version? 'selected': '' } >${version}</option>
-                        </c:forEach>
-                    </optgroup>
-                    <optgroup label="Snapshots">
-                        <c:forEach var="version" items="${versionInfo.snapshots}">
-                            <option ${bootVersion eq version? 'selected': '' } >${version}</option>
-                        </c:forEach>
-                    </optgroup>
+                    <c:forEach var="version" items="${versionInfo}">
+                        <option ${bootVersion eq version? 'selected': '' } >${version}</option>
+                    </c:forEach>
                 </select>
             </span>
                 <span class="col-6 text-left"> <button onclick="showDependencies()" class="btn-lg btn-primary">Show

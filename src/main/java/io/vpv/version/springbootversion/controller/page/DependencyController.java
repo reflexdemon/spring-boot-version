@@ -59,7 +59,7 @@ public class DependencyController {
     }
 
     private void updateGettingAllVersions(ModelMap model) {
-        VersionInfo versionInfo = bootVersionService.getAllVersionInfo();
+        List<String> versionInfo = bootVersionService.getDocumentedVersionList();
         model.put("versionInfo", versionInfo);
     }
 }

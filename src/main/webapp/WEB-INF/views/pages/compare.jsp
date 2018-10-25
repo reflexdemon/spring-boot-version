@@ -22,31 +22,17 @@
             <div class="card-body col-12">
                 <span class="col-6 text-right">Please select a version</span>
                 <span class="col-3">
-                <select class="selectpicker" data-live-search="true" id="firstVersion" name="firstVersion">
-                    <optgroup label="Milestones">
-                        <c:forEach var="version" items="${versionInfo.milestones}">
-                            <option ${firstVersion eq version? 'selected': '' } >${version}</option>
-                        </c:forEach>
-                    </optgroup>
-                    <optgroup label="Snapshots">
-                        <c:forEach var="version" items="${versionInfo.snapshots}">
-                            <option ${firstVersion eq version? 'selected': '' } >${version}</option>
-                        </c:forEach>
-                    </optgroup>
+                 <select class="selectpicker" data-live-search="true" id="firstVersion" name="firstVersion">
+                    <c:forEach var="version" items="${versionInfo}">
+                        <option ${firstVersion eq version? 'selected': '' } >${version}</option>
+                    </c:forEach>
                 </select>
             </span>
                 <span class="col-3">
                 <select class="selectpicker" data-live-search="true" id="secondVersion" name="secondVersion">
-                    <optgroup label="Milestones">
-                        <c:forEach var="version" items="${versionInfo.milestones}">
-                            <option ${secondVersion eq version? 'selected': '' } >${version}</option>
-                        </c:forEach>
-                    </optgroup>
-                    <optgroup label="Snapshots">
-                        <c:forEach var="version" items="${versionInfo.snapshots}">
-                            <option ${secondVersion eq version? 'selected': '' } >${version}</option>
-                        </c:forEach>
-                    </optgroup>
+                    <c:forEach var="version" items="${versionInfo}">
+                        <option ${secondVersion eq version? 'selected': '' } >${version}</option>
+                    </c:forEach>
                 </select>
             </span>
                 <span class="col-6 text-left"> <button onclick="showDependencies()" class="btn-lg btn-primary">CompareDependencies
