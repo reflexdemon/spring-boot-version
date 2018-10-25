@@ -12,9 +12,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
 
+import static java.util.Collections.reverseOrder;
 import static java.util.stream.Collectors.toList;
 
 /**
@@ -105,6 +107,7 @@ public class BootVersionService {
         List<String> versions = null;
         logger.debug("Listing Documented Spring Boot Versions");
         versions = getVersionsFromURL(docVersions);
+        versions.sort(reverseOrder(String::compareToIgnoreCase));
         return versions;
     }
 
