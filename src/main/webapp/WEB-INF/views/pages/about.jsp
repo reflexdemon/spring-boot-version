@@ -9,12 +9,12 @@
 <body>
 <div class="card">
     <div class="card-header">
-        About
+        About <span class="badge">${buildInfo.artifact} ${buildInfo.version}</span>
     </div>
     <div class="card-body">
         <h5 class="card-title">Purpose</h5>
         <p class="card-text">This is a simple tool that actually lists all the spring boot versions and its dependencies.</p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
+        <a href="https://github.com/reflexdemon/spring-boot-version" target="_blank" class="btn btn-primary">Github Project</a>
     </div>
 </div>
 </body>

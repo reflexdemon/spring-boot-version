@@ -1,0 +1,21 @@
+io:
+    vpv:
+        version:
+            endpoint:
+                docVersions: https://docs.spring.io/spring-boot/docs/
+                milestonelist: https://repo.spring.io/milestone/org/springframework/boot/spring-boot-starter/
+                snapshotlist: https://repo.spring.io/snapshot/org/springframework/boot/spring-boot-starter/
+                versionlist: https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-parent
+                dependency:
+                    base: https://docs.spring.io/spring-boot/docs/
+                    dependencyPage: /reference/html/appendix-dependency-versions.html
+management:
+    endpoints:
+        web:
+            exposure:
+                include: '*'
+spring:
+    devtools:
+        restart:
+            exclude: static/**
+            log-condition-evaluation-delta: false
