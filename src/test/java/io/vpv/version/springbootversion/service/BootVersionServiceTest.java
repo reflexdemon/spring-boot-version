@@ -3,6 +3,7 @@ package io.vpv.version.springbootversion.service;
 import io.vpv.version.springbootversion.SpringBootVersionApplicationTests;
 import io.vpv.version.springbootversion.modal.Dependency;
 import io.vpv.version.springbootversion.modal.VersionInfo;
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
@@ -23,6 +24,12 @@ public class BootVersionServiceTest extends SpringBootVersionApplicationTests {
     };
     @Autowired
     private BootVersionService bootVersionService;
+
+
+    @Before
+    public void setUp() {
+
+    }
 
     @Test
     public void testGetDependencies() throws Exception {
