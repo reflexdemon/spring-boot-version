@@ -2,12 +2,14 @@ package io.vpv.version.springbootversion.service;
 
 import io.vpv.version.springbootversion.modal.Dependency;
 import io.vpv.version.springbootversion.modal.VersionInfo;
+import io.vpv.version.springbootversion.util.DocumentParserUtility;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -45,68 +47,56 @@ public class BootVersionService {
     @Value("${io.vpv.version.endpoint.dependency.dependencyPage}")
     private String dependencyPage;
 
-
+    @Autowired
+    DocumentParserUtility documentParserUtility;
 
     @Cacheable("versionlist")
     public List<String> getVersionList() {
         List<String> versions = null;
-        try {
-            logger.debug("Listing Spring Versions");
-            Document document = null;
 
-            document = Jsoup.connect(versionlist).get();
+            logger.debug("Listing Spring Versions");
+            Document document = documentParserUtility.getDocumentFromURL(versionlist);
+
             Elements allTables =
                     document.select(".grid").select(".versions");
-                    versions = allTables.
-                            select("a").
-                            parallelStream().
-                            map( element -> {
-                                logger.info("element:" + element);
-                                if (null != element && element.hasClass("vbtn")) {
-                                    return element.text();
-                                } else {
-                                    return null;
-                                }
-                            }
-                    ).
-                    filter(item -> item != null)
-                            .collect(toList());
-        } catch (Exception  e) {
-            logger.error("Problem while getting the list of spring boot versions", e);
-            throw new RuntimeException("Problem while getting the list of spring boot versions", e);
-        }
+            versions = allTables.
+                    select("a").
+                    parallelStream().
+                    filter( element -> null != element).
+                    filter( element -> element.hasClass("vbtn")).
+                    map( element -> element.text()
+            ).collect(toList());
 
         return versions;
     }
 
     @Cacheable("milestonelist")
     public List<String> getMileStoneVersionList() {
-        List<String> versions = null;
         logger.debug("Listing Milestone Spring Boot Versions");
-        versions = getVersionsFromURL(milestonelist);
+        List<String> versions = getVersionsFromURL(milestonelist);
         return versions;
     }
 
     @Cacheable("snapshotlist")
     public List<String> getSnapshotVersionList() {
-        List<String> versions = null;
         logger.debug("Listing Snapshot Spring Boot Versions");
-        versions = getVersionsFromURL(snapshotlist);
+        List<String> versions = getVersionsFromURL(snapshotlist);
         return versions;
     }
 
 
     @Cacheable("versioninfo")
     public VersionInfo getAllVersionInfo() {
+        logger.debug("Listing All Boot Versions");
         VersionInfo versions = new VersionInfo(getMileStoneVersionList(), getSnapshotVersionList());
         return versions;
     }
 
     @Cacheable("docVersions")
     public List<String> getDocumentedVersionList() {
-        List<String> versions = null;
+
         logger.debug("Listing Documented Spring Boot Versions");
-        versions = getVersionsFromURL(docVersions);
+        List<String> versions = getVersionsFromURL(docVersions);
         versions.sort(reverseOrder(String::compareToIgnoreCase));
         return versions;
     }
@@ -114,26 +104,17 @@ public class BootVersionService {
     private List<String> getVersionsFromURL(String url) {
         logger.info("Making HTTP Call to {}", url);
         List<String> versions;
-        try {
-            Document document = null;
+        Document document = documentParserUtility.getDocumentFromURL(url);
 
-            document = Jsoup.connect(url).get();
-            Elements allTables =
-                    document.select("a");
-            versions = allTables.
-//                    next().//We need the second element
-//                    select("a").
-        parallelStream().filter(element -> element != null).
-                            map(element -> element.text()).
-                            filter(text -> !text.contains("..")).
-                            filter(text -> !text.contains("maven")).
-                            filter(text -> (text.indexOf('.') > 0)).
-                            map(value -> value.substring(0, value.length() - 1)).
-                            collect(toList());
-        } catch (Exception e) {
-            logger.error("Problem while getting the list of spring boot versions", e);
-            throw new RuntimeException("Problem while getting the list of spring boot versions", e);
-        }
+        versions = document.select("a").
+                parallelStream().
+                filter(element -> element != null).
+                map(element -> element.text()).
+                filter(text -> !text.contains("..")).
+                filter(text -> !text.contains("maven")).
+                filter(text -> (text.indexOf('.') > 0)).
+                map(value -> value.substring(0, value.length() - 1)).
+                collect(toList());
         return versions;
     }
 
@@ -143,35 +124,20 @@ public class BootVersionService {
         try {
             logger.debug("Searching dependencies for {}", bootVersion);
             String url = basePath + bootVersion + dependencyPage;
-            Document document = null;
-
-            document = Jsoup.connect(url).get();
+            Document document =  Jsoup.connect(url).get();
             Elements allTables =
                     document.select(".informaltable");
-            dependencies = allTables.select("tr").parallelStream().map(
-                    getTd(bootVersion)
-            ).filter(item -> item != null)
+            dependencies = allTables.select("tr").parallelStream().
+                    map(element -> element.select("td").eachText()).
+                    filter(values -> null != values).
+                    filter(values -> values.size() >= 3).
+                    map (value -> new Dependency(bootVersion, value.get(0), value.get(1), value.get(2)))
                     .collect(toList());
         } catch (Exception  e) {
             logger.error("Problem while getting the dependencies for {}", bootVersion, e);
             throw new RuntimeException("Problem while getting the dependencies for " + bootVersion, e);
         }
         return dependencies;
-    }
-
-    private Function<Element, Dependency> getTd(String bootVersion) {
-        return element -> {
-            List<String> values = element.select("td").eachText();
-            if (values.size() >= 3) {
-                String groupId = values.get(0);
-                String artifactId = values.get(1);
-                String version = values.get(2);
-                Dependency dependency = new Dependency(bootVersion, groupId, artifactId, version);
-//                            dependencies.add(dependency);
-                return dependency;
-            }
-            return null;
-        };
     }
 
 }
