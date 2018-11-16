@@ -1,8 +1,12 @@
 package io.vpv.version.springbootversion.service;
 
 import io.vpv.version.springbootversion.SpringBootVersionApplicationTests;
+import io.vpv.version.springbootversion.data.MockDataProvider;
 import io.vpv.version.springbootversion.modal.VersionSummary;
+import io.vpv.version.springbootversion.util.DocumentParserUtility;
+import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 
@@ -12,7 +16,16 @@ public class CompareServiceTest extends SpringBootVersionApplicationTests {
 
     @Autowired
     private CompareService compareService;
+    @Autowired
+    MockDataProvider mockDataProvider;
 
+    DocumentParserUtility documentParserUtility;
+
+    @Before
+    public void setUp() {
+        this.documentParserUtility =
+                mockDataProvider.initMockData(Mockito.mock(DocumentParserUtility.class));
+    }
     @Test
     public void shouldBeAbleToMerge() {
         String first = "1.1.2.RELEASE";

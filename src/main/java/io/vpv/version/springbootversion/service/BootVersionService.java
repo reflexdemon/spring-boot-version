@@ -24,6 +24,15 @@ import static java.util.stream.Collectors.toList;
 public class BootVersionService {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    public DocumentParserUtility getDocumentParserUtility() {
+        return documentParserUtility;
+    }
+
+    public void setDocumentParserUtility(DocumentParserUtility documentParserUtility) {
+        this.documentParserUtility = documentParserUtility;
+    }
+
     @Autowired
     DocumentParserUtility documentParserUtility;
     @Value("${io.vpv.version.endpoint.versionlist}")

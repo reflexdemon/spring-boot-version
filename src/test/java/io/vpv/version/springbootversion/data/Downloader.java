@@ -27,7 +27,6 @@ public class Downloader {
             "https://docs.spring.io/spring-boot/docs/2.0.3.BUILD-SNAPSHOT/reference/html/appendix-dependency-versions.html",
             "https://docs.spring.io/spring-boot/docs/2.0.4.RELEASE/reference/html/appendix-dependency-versions.html",
             "https://docs.spring.io/spring-boot/docs/2.1.0.BUILD-SNAPSHOT/reference/html/appendix-dependency-versions.html",
-            "https://docs.spring.io/spring-boot/docs/Junk/reference/html/appendix-dependency-versions.html",
             "https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-parent",
             "https://repo.spring.io/milestone/org/springframework/boot/spring-boot-starter/",
             "https://repo.spring.io/snapshot/org/springframework/boot/spring-boot-starter/"
@@ -35,17 +34,23 @@ public class Downloader {
     /**
      * The Constant OUTPUTDIR.
      */
-    private static String outDir = ".";
 
     public static void main(String args[]) {
 //        String target = Downloader.class.getClassLoader().getResource(".").getFile();
         String target = "./src/test/resources/mock-content/";
 
+        StringBuilder builder = new StringBuilder();
         int counter = 1;
         for (String endpoint : ENDPOINTS) {
-            getResponse(endpoint, (target + counter++ + ".html"));
+            String fileName = (target + counter++ + ".html");
+            getResponse(endpoint, fileName);
+            builder.append("map.put(\"")
+                    .append(endpoint)
+                    .append("\",\"")
+                    .append(fileName)
+                    .append("\");\n");
         }
-
+        System.out.println(builder.toString());
     }
 
 

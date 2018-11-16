@@ -1,7 +1,13 @@
 package io.vpv.version.springbootversion.controller.api;
 
 import io.vpv.version.springbootversion.SpringBootVersionMVCTests;
+import io.vpv.version.springbootversion.data.MockDataProvider;
+import io.vpv.version.springbootversion.service.BootVersionService;
+import io.vpv.version.springbootversion.util.DocumentParserUtility;
+import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
@@ -18,6 +24,22 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class RESTBootVersionServiceTest extends SpringBootVersionMVCTests {
     @Autowired
     private MockMvc mockMvc;
+
+    @Autowired
+    MockDataProvider mockDataProvider;
+
+    @Mock
+    DocumentParserUtility documentParserUtility;
+
+    @Mock
+    BootVersionService bootVersionService;
+
+    @Before
+    public void setUp() {
+        this.documentParserUtility =
+                mockDataProvider.initMockData(documentParserUtility);
+        bootVersionService.setDocumentParserUtility(this.documentParserUtility);
+    }
     @Test
     public void shouldReturnValidDependencies() throws Exception {
         MockHttpServletResponse result =
