@@ -1,14 +1,20 @@
 package io.vpv.version.springbootversion.service;
 
 import io.vpv.version.springbootversion.SpringBootVersionApplicationTests;
+import io.vpv.version.springbootversion.data.MockDataProvider;
 import io.vpv.version.springbootversion.modal.Dependency;
 import io.vpv.version.springbootversion.modal.VersionInfo;
+import io.vpv.version.springbootversion.util.DocumentParserUtility;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 
 import java.util.List;
+
+import static org.mockito.Mockito.mock;
 
 /**
  * Created by vprasanna on 6/12/18.
@@ -25,10 +31,17 @@ public class BootVersionServiceTest extends SpringBootVersionApplicationTests {
     @Autowired
     private BootVersionService bootVersionService;
 
+    @Autowired
+    MockDataProvider mockDataProvider;
+
+    @Mock
+    DocumentParserUtility documentParserUtility;
 
     @Before
     public void setUp() {
-
+        this.documentParserUtility =
+        mockDataProvider.initMockData(documentParserUtility);
+        bootVersionService.setDocumentParserUtility(this.documentParserUtility);
     }
 
     @Test

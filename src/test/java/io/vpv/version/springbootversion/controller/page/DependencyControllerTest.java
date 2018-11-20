@@ -1,4 +1,4 @@
-package io.vpv.version.springbootversion.controller.api;
+package io.vpv.version.springbootversion.controller.page;
 
 import io.vpv.version.springbootversion.SpringBootVersionMVCTests;
 import io.vpv.version.springbootversion.data.MockDataProvider;
@@ -16,22 +16,16 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-/**
- * Created by vprasanna on 6/12/18.
- */
-
-public class RESTBootVersionServiceTest extends SpringBootVersionMVCTests {
-    @Autowired
-    private MockMvc mockMvc;
+public class DependencyControllerTest extends SpringBootVersionMVCTests {
 
     @Autowired
     MockDataProvider mockDataProvider;
-
     @Mock
     DocumentParserUtility documentParserUtility;
-
     @Mock
     BootVersionService bootVersionService;
+    @Autowired
+    private MockMvc mockMvc;
 
     @Before
     public void setUp() {
@@ -39,78 +33,50 @@ public class RESTBootVersionServiceTest extends SpringBootVersionMVCTests {
                 mockDataProvider.initMockData(documentParserUtility);
         bootVersionService.setDocumentParserUtility(this.documentParserUtility);
     }
+
     @Test
-    public void shouldReturnValidDependencies() throws Exception {
+    public void shouldReturnAValidDependencyPageTemplate() throws Exception {
         MockHttpServletResponse result =
-                this.mockMvc.perform(get("/api/dependency/"
+                this.mockMvc.perform(get("/dependency/"
                         + "2.0.2.RELEASE"))
                         .andDo(print())
                         .andExpect(status().isOk())
-                .andReturn().getResponse();
-
-        Assert.notNull(result, "This should return valid list of dependencies");
-    }
-
-    @Test
-    public void shouldNotReturnValidDependencies() throws Exception {
-        MockHttpServletResponse result =
-                this.mockMvc.perform(
-                        get("/api/dependency/"
-                                + "Junk")
-                        )
-                        .andDo(print())
-                        .andExpect(status().is5xxServerError())
-                .andReturn().getResponse();
-        Assert.notNull(result, "Should throw Error for invalid request");
-    }
-
-
-    @Test
-    public void shouldReturnValidReleases() throws Exception {
-        MockHttpServletResponse result =
-                this.mockMvc.perform(get("/api/releases/"))
-                        .andDo(print())
-                        .andExpect(status().isOk())
-//                        .andExpect(jsonPath("$", hasSize(1)))
-                        .andReturn().getResponse();
-
-        Assert.notNull(result, "This should return valid list of dependencies");
-    }
-
-
-    @Test
-    public void shouldReturnValidSnapshots() throws Exception {
-        MockHttpServletResponse result =
-                this.mockMvc.perform(get("/api/snapshot"))
-                        .andDo(print())
-                        .andExpect(status().isOk())
-//                        .andExpect(jsonPath("$", hasSize(1)))
                         .andReturn().getResponse();
 
         Assert.notNull(result, "This should return valid list of dependencies");
     }
 
     @Test
-    public void shouldReturnValidMilestones() throws Exception {
+    public void shouldReturnAValidDependencyPageTemplateBadValue() throws Exception {
         MockHttpServletResponse result =
-                this.mockMvc.perform(get("/api/milestones"))
+                this.mockMvc.perform(get("/dependency/"
+                        + "JUNK"))
                         .andDo(print())
                         .andExpect(status().isOk())
-//                        .andExpect(jsonPath("$", hasSize(1)))
                         .andReturn().getResponse();
 
         Assert.notNull(result, "This should return valid list of dependencies");
-
-
     }
 
     @Test
-    public void shouldReturnValidVersions() throws Exception {
+    public void shouldReturnAValidDependencyPageTemplateWithQueryParam() throws Exception {
         MockHttpServletResponse result =
-                this.mockMvc.perform(get("/api/versions"))
+                this.mockMvc.perform(get("/dependency?bootVersion="
+                        + "2.0.2.RELEASE"))
+                        .andDo(print())
+                        .andExpect(status().is3xxRedirection())
+                        .andReturn().getResponse();
+
+        Assert.notNull(result, "This should return valid list of dependencies");
+    }
+
+    @Test
+    public void shouldReturnAValidDependencyPageTemplateWithQueryParamBadParam() throws Exception {
+        MockHttpServletResponse result =
+                this.mockMvc.perform(get("/dependency?badParam="
+                        + "2.0.2.RELEASE"))
                         .andDo(print())
                         .andExpect(status().isOk())
-//                        .andExpect(jsonPath("$", hasSize(1)))
                         .andReturn().getResponse();
 
         Assert.notNull(result, "This should return valid list of dependencies");

@@ -20,7 +20,7 @@ public class AboutController {
 
 
     @RequestMapping(value = {"/about"}, method = RequestMethod.GET)
-    public String dependencyPage(ModelMap model) {
+    public String aboutPage(ModelMap model) {
 
 
         model.put("viewName", "about");

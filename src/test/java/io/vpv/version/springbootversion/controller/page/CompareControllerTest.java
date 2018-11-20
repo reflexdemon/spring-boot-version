@@ -1,4 +1,4 @@
-package io.vpv.version.springbootversion.controller.api;
+package io.vpv.version.springbootversion.controller.page;
 
 import io.vpv.version.springbootversion.SpringBootVersionMVCTests;
 import io.vpv.version.springbootversion.data.MockDataProvider;
@@ -18,18 +18,14 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-/**
- * Created by vprasanna on 6/12/18.
- */
-
-public class RESTCompareServiceTest extends SpringBootVersionMVCTests {
-    @Autowired
-    private MockMvc mockMvc;
+public class CompareControllerTest extends SpringBootVersionMVCTests {
 
     @Autowired
     MockDataProvider mockDataProvider;
     @Mock
     DocumentParserUtility documentParserUtility;
+    @Autowired
+    private MockMvc mockMvc;
     @InjectMocks
     private CompareService compareService;
     @Autowired
@@ -42,17 +38,44 @@ public class RESTCompareServiceTest extends SpringBootVersionMVCTests {
         bootVersionService.setDocumentParserUtility(this.documentParserUtility);
         compareService = new CompareService(bootVersionService);
     }
+
     @Test
     public void shouldReturnValidDependencies() throws Exception {
         MockHttpServletResponse result =
-                this.mockMvc.perform(get("/api/compare/"
+                this.mockMvc.perform(get("/compare/"
                         + "2.0.4.RELEASE"
                         + "/"
                         + "2.0.1.RELEASE"))
                         .andDo(print())
                         .andExpect(status().isOk())
-//                        .andExpect(jsonPath("$", hasSize(1)))
-                .andReturn().getResponse();
+                        .andReturn().getResponse();
+
+        Assert.notNull(result, "This should be able to compare list of dependencies");
+    }
+
+
+    @Test
+    public void shouldReturnValidDependenciesWithParam() throws Exception {
+        MockHttpServletResponse result =
+                this.mockMvc.perform(get("/compare?firstVersion="
+                        + "2.0.4.RELEASE"
+                        + "&secondVersion"
+                        + "2.0.1.RELEASE"))
+                        .andDo(print())
+                        .andExpect(status().isOk())
+                        .andReturn().getResponse();
+
+        Assert.notNull(result, "This should be able to compare list of dependencies");
+    }
+
+
+    @Test
+    public void shouldReturnValidDependenciesDefault() throws Exception {
+        MockHttpServletResponse result =
+                this.mockMvc.perform(get("/compare"))
+                        .andDo(print())
+                        .andExpect(status().isOk())
+                        .andReturn().getResponse();
 
         Assert.notNull(result, "This should be able to compare list of dependencies");
     }

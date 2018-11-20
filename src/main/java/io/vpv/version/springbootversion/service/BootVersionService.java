@@ -3,9 +3,7 @@ package io.vpv.version.springbootversion.service;
 import io.vpv.version.springbootversion.modal.Dependency;
 import io.vpv.version.springbootversion.modal.VersionInfo;
 import io.vpv.version.springbootversion.util.DocumentParserUtility;
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,9 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.function.Function;
 
 import static java.util.Collections.reverseOrder;
 import static java.util.stream.Collectors.toList;
@@ -29,26 +25,24 @@ public class BootVersionService {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @Value("${io.vpv.version.endpoint.versionlist}")
-    private String versionlist;
-
-    @Value("${io.vpv.version.endpoint.milestonelist}")
-    private String milestonelist;
-
-    @Value("${io.vpv.version.endpoint.snapshotlist}")
-    private String snapshotlist;
-
-    @Value("${io.vpv.version.endpoint.docVersions}")
-    private String docVersions;
-
-    @Value("${io.vpv.version.endpoint.dependency.base}")
-    private String basePath;
-
-    @Value("${io.vpv.version.endpoint.dependency.dependencyPage}")
-    private String dependencyPage;
+    public void setDocumentParserUtility(DocumentParserUtility documentParserUtility) {
+        this.documentParserUtility = documentParserUtility;
+    }
 
     @Autowired
     DocumentParserUtility documentParserUtility;
+    @Value("${io.vpv.version.endpoint.versionlist}")
+    private String versionlist;
+    @Value("${io.vpv.version.endpoint.milestonelist}")
+    private String milestonelist;
+    @Value("${io.vpv.version.endpoint.snapshotlist}")
+    private String snapshotlist;
+    @Value("${io.vpv.version.endpoint.docVersions}")
+    private String docVersions;
+    @Value("${io.vpv.version.endpoint.dependency.base}")
+    private String basePath;
+    @Value("${io.vpv.version.endpoint.dependency.dependencyPage}")
+    private String dependencyPage;
 
     @Cacheable("versionlist")
     public List<String> getVersionList() {
@@ -102,7 +96,6 @@ public class BootVersionService {
     }
 
     private List<String> getVersionsFromURL(String url) {
-        logger.info("Making HTTP Call to {}", url);
         List<String> versions;
         Document document = documentParserUtility.getDocumentFromURL(url);
 
@@ -124,7 +117,8 @@ public class BootVersionService {
         try {
             logger.debug("Searching dependencies for {}", bootVersion);
             String url = basePath + bootVersion + dependencyPage;
-            Document document =  Jsoup.connect(url).get();
+            Document document = documentParserUtility.getDocumentFromURL(url);
+            ;
             Elements allTables =
                     document.select(".informaltable");
             dependencies = allTables.select("tr").parallelStream().

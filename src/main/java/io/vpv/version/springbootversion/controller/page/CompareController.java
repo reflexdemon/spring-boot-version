@@ -1,7 +1,5 @@
 package io.vpv.version.springbootversion.controller.page;
 
-import io.vpv.version.springbootversion.modal.Dependency;
-import io.vpv.version.springbootversion.modal.VersionInfo;
 import io.vpv.version.springbootversion.modal.VersionSummary;
 import io.vpv.version.springbootversion.service.BootVersionService;
 import io.vpv.version.springbootversion.service.CompareService;
