@@ -25,10 +25,6 @@ public class BootVersionService {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    public DocumentParserUtility getDocumentParserUtility() {
-        return documentParserUtility;
-    }
-
     public void setDocumentParserUtility(DocumentParserUtility documentParserUtility) {
         this.documentParserUtility = documentParserUtility;
     }
