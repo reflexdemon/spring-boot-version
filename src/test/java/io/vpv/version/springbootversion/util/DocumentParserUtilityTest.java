@@ -14,7 +14,7 @@ public class DocumentParserUtilityTest extends SpringBootVersionApplicationTests
     @Test
     public void getDocumentFromURL() {
 
-        Document fromURL = documentParserUtility.getDocumentFromURL("https://blog.vpv.io");
+        Document fromURL = documentParserUtility.getDocumentFromURL("http://httpbin.org/status/200");
         Assert.notNull(fromURL, "Expect a non null value");
     }
 
@@ -29,6 +29,6 @@ public class DocumentParserUtilityTest extends SpringBootVersionApplicationTests
     @Test(expected = RuntimeException.class)
     public void shouldExpectRunTimeException() {
 
-        Document fromURL = documentParserUtility.getDocumentFromURL("http://www.badddddddguy.url");
+        Document fromURL = documentParserUtility.getDocumentFromURL("http://httpbin.org/status/400");
     }
 }

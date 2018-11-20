@@ -78,9 +78,6 @@ public class CompareService {
     }
 
     private Map<String, Dependency> parseListToMap(List<Dependency> first) {
-        if (null == first || first.isEmpty()) {
-            return null;
-        }
         final Map<String, Dependency> entries = new HashMap<>();
 
         first.stream()
