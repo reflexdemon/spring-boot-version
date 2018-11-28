@@ -43,6 +43,15 @@ public class CompareServiceTest extends SpringBootVersionApplicationTests {
         Assert.notEmpty(versionSummary.getArtifacts(), "Should have artifacts listed");
     }
 
+    @Test(expected = RuntimeException.class)
+    public void shouldBeAbleToMerge1() {
+        String first = "1.1.2.RELEASE";
+        String second = "";
+
+        VersionSummary versionSummary = compareService.merge(first, second);
+
+        System.out.println("Summary:" + versionSummary);
+    }
 
     @Test
     public void shouldBeAbleToMergeBadInput() {

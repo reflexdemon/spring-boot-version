@@ -26,7 +26,7 @@
           href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/css/bootstrap-select.min.css">
 
     <link href="<c:url value='/static/css/app.css' />" rel="stylesheet"/>
-    <link href="<c:url value='/static/css/darkly/bootstrap.min.css' />" rel="stylesheet"/>
+    <link href="<c:url value='/static/css/superheroo/bootstrap.min.css' />" rel="stylesheet"/>
 </head>
 
 <body>

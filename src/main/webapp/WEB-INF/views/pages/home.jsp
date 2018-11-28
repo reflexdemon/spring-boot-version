@@ -17,5 +17,11 @@
             This is a simple tool to list all the dependencies for the Spring Boot project...</p>
     </div>
 </div>
+
+<ul class="column-splitter">
+    <c:forEach var="version" items="${versionInfo}">
+        <li><a href="${pageContext.request.contextPath}/dependency/${version}">${version}</a></li>
+    </c:forEach>
+</ul>
 </body>
 </html>

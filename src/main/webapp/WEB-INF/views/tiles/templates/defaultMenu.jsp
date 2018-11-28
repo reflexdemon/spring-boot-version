@@ -18,6 +18,12 @@
             <li class="nav-item ${viewName == 'about' ? 'active' : ''}">
                 <a class="nav-link" href="${pageContext.request.contextPath}/about">About</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="${pageContext.request.contextPath}/swagger-ui.html">Swagger API</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="https://github.com/reflexdemon/spring-boot-version" target="_blank">GitHub</a>
+            </li>
 
         </ul>
 
