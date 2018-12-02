@@ -41,9 +41,10 @@
         </div>
     </c:if>
 
-    <c:if test="${dependencies != null}">
+    <c:if test="${dependencies != null && dependencies.dependencies != null}">
+        Source: <span>${dependencies.source}</span>
         <table class="table col-6">
-            <c:forEach var="item" items="${dependencies}">
+            <c:forEach var="item" items="${dependencies.dependencies}">
                 <tr>
                     <td>${item.groupId}:${item.artifactId}:${item.version}</td>
                 </tr>

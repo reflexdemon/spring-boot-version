@@ -2,7 +2,7 @@ package io.vpv.version.springbootversion.service;
 
 import io.vpv.version.springbootversion.SpringBootVersionApplicationTests;
 import io.vpv.version.springbootversion.data.MockDataProvider;
-import io.vpv.version.springbootversion.modal.Dependency;
+import io.vpv.version.springbootversion.modal.DependencyDetails;
 import io.vpv.version.springbootversion.modal.VersionSummary;
 import io.vpv.version.springbootversion.util.DocumentParserUtility;
 import org.junit.Before;
@@ -10,8 +10,6 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
-
-import java.util.List;
 
 public class CompareServiceTest extends SpringBootVersionApplicationTests {
 
@@ -55,8 +53,8 @@ public class CompareServiceTest extends SpringBootVersionApplicationTests {
 
     @Test
     public void shouldBeAbleToMergeBadInput() {
-        List<Dependency> first = null;
-        List<Dependency> second = null;
+        DependencyDetails first = null;
+        DependencyDetails second = null;
 
         VersionSummary versionSummary = compareService.merge(first, second);
 
