@@ -2,19 +2,16 @@ package io.vpv.version.springbootversion.service;
 
 import io.vpv.version.springbootversion.SpringBootVersionApplicationTests;
 import io.vpv.version.springbootversion.data.MockDataProvider;
-import io.vpv.version.springbootversion.modal.Dependency;
+import io.vpv.version.springbootversion.modal.DependencyDetails;
 import io.vpv.version.springbootversion.modal.VersionInfo;
 import io.vpv.version.springbootversion.util.DocumentParserUtility;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 
 import java.util.List;
-
-import static org.mockito.Mockito.mock;
 
 /**
  * Created by vprasanna on 6/12/18.
@@ -48,9 +45,10 @@ public class BootVersionServiceTest extends SpringBootVersionApplicationTests {
     public void testGetDependencies() throws Exception {
 
         for (String bootVersion :SPRING_BOOT_VERSIONS) {
-            List<Dependency> output = bootVersionService.getDependencies(bootVersion);
+            DependencyDetails output = bootVersionService.getDependencies(bootVersion);
             System.out.println("output:" + output);
-            Assert.notEmpty(output, "The list is empty.");
+            Assert.notNull(output, "Result is empty.");
+            Assert.notEmpty(output.getDependencies(), "The list is empty.");
         }
 
     }

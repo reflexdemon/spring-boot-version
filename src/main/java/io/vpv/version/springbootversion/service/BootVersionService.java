@@ -1,9 +1,11 @@
 package io.vpv.version.springbootversion.service;
 
 import io.vpv.version.springbootversion.modal.Dependency;
+import io.vpv.version.springbootversion.modal.DependencyDetails;
 import io.vpv.version.springbootversion.modal.VersionInfo;
 import io.vpv.version.springbootversion.util.DocumentParserUtility;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +15,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 import static java.util.Collections.reverseOrder;
 import static java.util.stream.Collectors.toList;
@@ -56,10 +59,10 @@ public class BootVersionService {
             versions = allTables.
                     select("a").
                     parallelStream().
-                    filter( element -> null != element).
+                    filter(Objects::nonNull).
                     filter( element -> element.hasClass("vbtn")).
-                    map( element -> element.text()
-            ).collect(toList());
+                    map(Element::text).
+                    collect(toList());
 
         return versions;
     }
@@ -67,23 +70,20 @@ public class BootVersionService {
     @Cacheable("milestonelist")
     public List<String> getMileStoneVersionList() {
         logger.debug("Listing Milestone Spring Boot Versions");
-        List<String> versions = getVersionsFromURL(milestonelist);
-        return versions;
+        return getVersionsFromURL(milestonelist);
     }
 
     @Cacheable("snapshotlist")
     public List<String> getSnapshotVersionList() {
         logger.debug("Listing Snapshot Spring Boot Versions");
-        List<String> versions = getVersionsFromURL(snapshotlist);
-        return versions;
+        return getVersionsFromURL(snapshotlist);
     }
 
 
     @Cacheable("versioninfo")
     public VersionInfo getAllVersionInfo() {
         logger.debug("Listing All Boot Versions");
-        VersionInfo versions = new VersionInfo(getMileStoneVersionList(), getSnapshotVersionList());
-        return versions;
+        return new VersionInfo(getMileStoneVersionList(), getSnapshotVersionList());
     }
 
     @Cacheable("docVersions")
@@ -91,6 +91,7 @@ public class BootVersionService {
 
         logger.debug("Listing Documented Spring Boot Versions");
         List<String> versions = getVersionsFromURL(docVersions);
+        //Get latest on Top
         versions.sort(reverseOrder(String::compareToIgnoreCase));
         return versions;
     }
@@ -100,9 +101,9 @@ public class BootVersionService {
         Document document = documentParserUtility.getDocumentFromURL(url);
 
         versions = document.select("a").
-                parallelStream().
-                filter(element -> element != null).
-                map(element -> element.text()).
+                stream().
+                filter(Objects::nonNull).
+                map(Element::text).
                 filter(text -> !text.contains("..")).
                 filter(text -> !text.contains("maven")).
                 filter(text -> (text.indexOf('.') > 0)).
@@ -112,7 +113,8 @@ public class BootVersionService {
     }
 
     @Cacheable(value = "dependency", key = "#bootVersion")
-    public List<Dependency> getDependencies(final String bootVersion) {
+    public DependencyDetails getDependencies(final String bootVersion) {
+        DependencyDetails dependencyDetails = null;
         List<Dependency> dependencies = null;
         try {
             logger.debug("Searching dependencies for {}", bootVersion);
@@ -121,17 +123,19 @@ public class BootVersionService {
             ;
             Elements allTables =
                     document.select(".informaltable");
-            dependencies = allTables.select("tr").parallelStream().
+            dependencies = allTables.select("tr").
+                    stream().
                     map(element -> element.select("td").eachText()).
-                    filter(values -> null != values).
+                    filter(Objects::nonNull).
                     filter(values -> values.size() >= 3).
-                    map (value -> new Dependency(bootVersion, value.get(0), value.get(1), value.get(2)))
-                    .collect(toList());
+                    map(value -> new Dependency(bootVersion, value.get(0), value.get(1), value.get(2))).
+                    collect(toList());
+            dependencyDetails = new DependencyDetails(dependencies, url, bootVersion);
         } catch (Exception  e) {
             logger.error("Problem while getting the dependencies for {}", bootVersion, e);
             throw new RuntimeException("Problem while getting the dependencies for " + bootVersion, e);
         }
-        return dependencies;
+        return dependencyDetails;
     }
 
 }

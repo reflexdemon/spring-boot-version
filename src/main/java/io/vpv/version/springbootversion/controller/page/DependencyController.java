@@ -1,7 +1,6 @@
 package io.vpv.version.springbootversion.controller.page;
 
-import io.vpv.version.springbootversion.modal.Dependency;
-import io.vpv.version.springbootversion.modal.VersionInfo;
+import io.vpv.version.springbootversion.modal.DependencyDetails;
 import io.vpv.version.springbootversion.service.BootVersionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -46,7 +45,7 @@ public class DependencyController {
         updateGettingAllVersions(model);
 
         try {
-            List<Dependency> dependencies = bootVersionService.getDependencies(bootVersion);
+            DependencyDetails dependencies = bootVersionService.getDependencies(bootVersion);
 
             model.put("dependencies", dependencies);
         } catch (RuntimeException re) {
