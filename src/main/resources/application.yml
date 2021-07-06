@@ -9,6 +9,7 @@ io:
                 dependency:
                     base: https://docs.spring.io/spring-boot/docs/
                     dependencyPage: /reference/html/appendix-dependency-versions.html
+                    dependencyPageNew: /reference/html/dependency-versions.html
 management:
     endpoints:
         web:

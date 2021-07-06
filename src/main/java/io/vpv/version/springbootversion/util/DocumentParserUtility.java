@@ -18,13 +18,19 @@ public class DocumentParserUtility {
             throw new IllegalArgumentException("Parameter URL is missing");
         }
 
-        Document document = null;
-
         try {
-            return document = Jsoup.connect(url).get();
+            return Jsoup.connect(url).get();
         } catch (IOException e) {
             throw new RuntimeException("Unable to connect to " + url, e);
         }
+    }
 
+    public Document getDocumentFromURL(String baseURL, String dependencyPage, String dependencyPageNew) {
+        try {
+            return getDocumentFromURL(baseURL + dependencyPage);
+        } catch (RuntimeException e) {
+            //In case of error we will defer to new Page URL
+            return getDocumentFromURL(baseURL + dependencyPageNew);
+        }
     }
 }

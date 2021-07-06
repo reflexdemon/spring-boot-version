@@ -1,6 +1,5 @@
 package io.vpv.version.springbootversion.controller.page;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.info.BuildProperties;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -14,9 +13,11 @@ import java.util.TreeMap;
 public class AboutController {
 
 
+    private final BuildProperties buildProperties;
 
-    @Autowired
-    private BuildProperties buildProperties;
+    public AboutController(BuildProperties buildProperties) {
+        this.buildProperties = buildProperties;
+    }
 
 
     @RequestMapping(value = {"/about"}, method = RequestMethod.GET)

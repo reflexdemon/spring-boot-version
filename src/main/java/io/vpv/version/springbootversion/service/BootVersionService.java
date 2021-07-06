@@ -46,16 +46,18 @@ public class BootVersionService {
     private String basePath;
     @Value("${io.vpv.version.endpoint.dependency.dependencyPage}")
     private String dependencyPage;
+    @Value("${io.vpv.version.endpoint.dependency.dependencyPageNew}")
+    private String dependencyPageNew;
 
     @Cacheable("versionlist")
     public List<String> getVersionList() {
         List<String> versions = null;
 
-            logger.debug("Listing Spring Versions");
-            Document document = documentParserUtility.getDocumentFromURL(versionlist);
+        logger.debug("Listing Spring Versions");
+        Document document = documentParserUtility.getDocumentFromURL(versionlist);
 
-            Elements allTables =
-                    document.select(".grid").select(".versions");
+        Elements allTables =
+                document.select(".grid").select(".versions");
             versions = allTables.
                     select("a").
                     parallelStream().
@@ -118,11 +120,15 @@ public class BootVersionService {
         List<Dependency> dependencies = null;
         try {
             logger.debug("Searching dependencies for {}", bootVersion);
-            String url = basePath + bootVersion + dependencyPage;
-            Document document = documentParserUtility.getDocumentFromURL(url);
-            ;
+            String url = basePath + bootVersion;
+            Document document = documentParserUtility.getDocumentFromURL(url, dependencyPage, dependencyPageNew);
+
             Elements allTables =
-                    document.select(".informaltable");
+                    document.select("body > div.appendix > div.informaltable > table");
+            if (allTables.size() == 0) {
+                allTables =
+                        document.select("div.sect1:nth-child(2) > div:nth-child(2) > table:nth-child(2)");
+            }
             dependencies = allTables.select("tr").
                     stream().
                     map(element -> element.select("td").eachText()).

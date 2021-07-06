@@ -2,8 +2,6 @@ package io.vpv.version.springbootversion.data;
 
 import io.vpv.version.springbootversion.util.DocumentParserUtility;
 import org.jsoup.nodes.Document;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
@@ -11,7 +9,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.joining;
 import static org.mockito.Mockito.when;
@@ -45,8 +42,12 @@ public class MockDataProvider {
             Document document = new Document(
                     strDoc
             );
+            String dependencyPage = "/reference/html/appendix-dependency-versions.html";
+            String dependencyPageNew = "/reference/html/dependency-versions.html";
             document.html(strDoc);
             when(documentParserUtility.getDocumentFromURL(entry.getKey()))
+                    .thenReturn(document);
+            when(documentParserUtility.getDocumentFromURL(entry.getKey(), dependencyPage, dependencyPageNew))
                     .thenReturn(document);
         }
 
