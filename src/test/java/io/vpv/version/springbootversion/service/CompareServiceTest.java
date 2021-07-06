@@ -6,6 +6,7 @@ import io.vpv.version.springbootversion.modal.DependencyDetails;
 import io.vpv.version.springbootversion.modal.VersionSummary;
 import io.vpv.version.springbootversion.util.DocumentParserUtility;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,7 @@ public class CompareServiceTest extends SpringBootVersionApplicationTests {
         compareService = new CompareService(bootVersionService);
     }
     @Test
+    @Ignore
     public void shouldBeAbleToMerge() {
         String first = "1.1.2.RELEASE";
         String second = "2.0.1.RELEASE";

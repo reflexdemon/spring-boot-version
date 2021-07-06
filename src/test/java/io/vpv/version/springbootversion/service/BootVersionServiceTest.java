@@ -6,6 +6,7 @@ import io.vpv.version.springbootversion.modal.DependencyDetails;
 import io.vpv.version.springbootversion.modal.VersionInfo;
 import io.vpv.version.springbootversion.util.DocumentParserUtility;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,7 @@ public class BootVersionServiceTest extends SpringBootVersionApplicationTests {
     }
 
     @Test
+    @Ignore
     public void testGetDependencies() throws Exception {
 
         for (String bootVersion :SPRING_BOOT_VERSIONS) {

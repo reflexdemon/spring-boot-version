@@ -6,6 +6,7 @@ import io.vpv.version.springbootversion.service.BootVersionService;
 import io.vpv.version.springbootversion.service.CompareService;
 import io.vpv.version.springbootversion.util.DocumentParserUtility;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -43,6 +44,7 @@ public class RESTCompareServiceTest extends SpringBootVersionMVCTests {
         compareService = new CompareService(bootVersionService);
     }
     @Test
+    @Ignore
     public void shouldReturnValidDependencies() throws Exception {
         MockHttpServletResponse result =
                 this.mockMvc.perform(get("/api/compare/"
