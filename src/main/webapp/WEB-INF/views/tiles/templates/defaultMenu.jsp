@@ -16,7 +16,7 @@
                 <a class="nav-link" href="${pageContext.request.contextPath}/compare">Compare</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="${pageContext.request.contextPath}/swagger-ui/index.html">Swagger API</a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/swagger-ui/index.html" target="_blank">Swagger API</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="https://github.com/reflexdemon/spring-boot-version" target="_blank">GitHub</a>
