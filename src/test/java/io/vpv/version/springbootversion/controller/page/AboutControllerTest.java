@@ -1,7 +1,7 @@
 package io.vpv.version.springbootversion.controller.page;
 
 import io.vpv.version.springbootversion.SpringBootVersionMVCTests;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;

@@ -5,9 +5,9 @@ import io.vpv.version.springbootversion.data.MockDataProvider;
 import io.vpv.version.springbootversion.service.BootVersionService;
 import io.vpv.version.springbootversion.service.CompareService;
 import io.vpv.version.springbootversion.util.DocumentParserUtility;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +36,7 @@ public class RESTCompareServiceTest extends SpringBootVersionMVCTests {
     @Autowired
     private BootVersionService bootVersionService;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         this.documentParserUtility =
                 mockDataProvider.initMockData(documentParserUtility);
@@ -44,7 +44,7 @@ public class RESTCompareServiceTest extends SpringBootVersionMVCTests {
         compareService = new CompareService(bootVersionService);
     }
     @Test
-    @Ignore
+    @Disabled
     public void shouldReturnValidDependencies() throws Exception {
         MockHttpServletResponse result =
                 this.mockMvc.perform(get("/api/compare/"

@@ -5,9 +5,10 @@ import io.vpv.version.springbootversion.data.MockDataProvider;
 import io.vpv.version.springbootversion.modal.DependencyDetails;
 import io.vpv.version.springbootversion.modal.VersionSummary;
 import io.vpv.version.springbootversion.util.DocumentParserUtility;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
@@ -23,7 +24,7 @@ public class CompareServiceTest extends SpringBootVersionApplicationTests {
     @Autowired
     private BootVersionService bootVersionService;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         this.documentParserUtility =
                 mockDataProvider.initMockData(documentParserUtility);
@@ -31,7 +32,7 @@ public class CompareServiceTest extends SpringBootVersionApplicationTests {
         compareService = new CompareService(bootVersionService);
     }
     @Test
-    @Ignore
+    @Disabled
     public void shouldBeAbleToMerge() {
         String first = "1.1.2.RELEASE";
         String second = "2.0.1.RELEASE";
@@ -43,14 +44,15 @@ public class CompareServiceTest extends SpringBootVersionApplicationTests {
         Assert.notEmpty(versionSummary.getArtifacts(), "Should have artifacts listed");
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void shouldBeAbleToMerge1() {
         String first = "1.1.2.RELEASE";
         String second = "";
+        Assertions.assertThrows(RuntimeException.class, () -> {
+            VersionSummary versionSummary = compareService.merge(first, second);
 
-        VersionSummary versionSummary = compareService.merge(first, second);
-
-        System.out.println("Summary:" + versionSummary);
+            System.out.println("Summary:" + versionSummary);
+        });
     }
 
     @Test

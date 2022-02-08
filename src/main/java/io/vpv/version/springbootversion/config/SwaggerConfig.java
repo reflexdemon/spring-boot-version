@@ -1,48 +1,48 @@
 package io.vpv.version.springbootversion.config;
 
-import com.google.common.base.Predicate;
+import io.swagger.v3.oas.models.info.Contact;
+import io.swagger.v3.oas.models.info.Info;
+import org.springdoc.core.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import springfox.documentation.builders.ApiInfoBuilder;
-import springfox.documentation.service.ApiInfo;
-import springfox.documentation.service.Contact;
-import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-import static com.google.common.base.Predicates.or;
-import static springfox.documentation.builders.PathSelectors.regex;
 
 @Configuration
-@EnableSwagger2
 public class SwaggerConfig {
     @Bean
-    public Docket newsApi() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .groupName("api")
-                .apiInfo(apiInfo())
-                .select()
-                .paths(paths())
+    public GroupedOpenApi publicApi() {
+        return GroupedOpenApi.builder()
+                .group("springshop-public")
+                .pathsToMatch("/public/**")
+                .build();
+    }
+    @Bean
+    public GroupedOpenApi adminApi() {
+        return GroupedOpenApi.builder()
+                .group("api")
+                .pathsToMatch("/api/**")
+//                .addOpenApiMethodFilter(method -> method.isAnnotationPresent(Admin.class))
                 .build();
     }
 
-    private Predicate<String> paths() {
-        return or(regex("/api/.*"));
-    }
 
     private Contact contact() {
-        return new Contact("Venkateswara VP", "https://boottree.vpv.io", "contact@vpv.io");
+        Contact contact = new Contact();
+        contact.setName("Venkateswara VP");
+        contact.setUrl("https://boottree.vpv.io");
+        contact.setEmail("contact@vpv.io");
+        return contact;
     }
 
-    private ApiInfo apiInfo() {
-        return new ApiInfoBuilder()
+    private Info apiInfo() {
+        return new Info()
                 .title("REST Spring Boot Dependency Project")
                 .description("REST API for Accessing the dependency for Spring Boot Project")
-                .termsOfServiceUrl("http://boottree.vpv.io/")
+                .termsOfService("http://boottree.vpv.io/")
                 .contact(contact())
-                .license("Back to Home Page")
-                .licenseUrl("/")
-                .version("1.0")
-                .build();
+//                .license(License)
+//                .licenseUrl("/")
+                .version("1.0");
+//                .build();
     }
 }

@@ -20,3 +20,6 @@ spring:
         restart:
             exclude: static/**
             log-condition-evaluation-delta: false
+    mvc:
+        pathmatch:
+            matching-strategy: ant_path_matcher

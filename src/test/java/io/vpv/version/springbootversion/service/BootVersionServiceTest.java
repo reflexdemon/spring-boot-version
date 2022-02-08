@@ -5,9 +5,9 @@ import io.vpv.version.springbootversion.data.MockDataProvider;
 import io.vpv.version.springbootversion.modal.DependencyDetails;
 import io.vpv.version.springbootversion.modal.VersionInfo;
 import io.vpv.version.springbootversion.util.DocumentParserUtility;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
@@ -35,7 +35,7 @@ public class BootVersionServiceTest extends SpringBootVersionApplicationTests {
     @Mock
     DocumentParserUtility documentParserUtility;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         this.documentParserUtility =
         mockDataProvider.initMockData(documentParserUtility);
@@ -43,7 +43,7 @@ public class BootVersionServiceTest extends SpringBootVersionApplicationTests {
     }
 
     @Test
-    @Ignore
+    @Disabled
     public void testGetDependencies() throws Exception {
 
         for (String bootVersion :SPRING_BOOT_VERSIONS) {

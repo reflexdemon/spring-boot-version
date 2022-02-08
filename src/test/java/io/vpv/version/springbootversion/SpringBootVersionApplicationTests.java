@@ -1,20 +1,27 @@
 package io.vpv.version.springbootversion;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.MockitoAnnotations;
+import org.springframework.boot.autoconfigure.info.ProjectInfoAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
+@ExtendWith(SpringExtension.class)
+@Import(ProjectInfoAutoConfiguration.class)
 public class SpringBootVersionApplicationTests {
 
 
-	@Before
-	public void setUp() {
-		MockitoAnnotations.initMocks(this);
+	@BeforeEach
+	void setUp() {
+		try {
+			MockitoAnnotations.openMocks(this).close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	@Test
 	public void contextLoads() {

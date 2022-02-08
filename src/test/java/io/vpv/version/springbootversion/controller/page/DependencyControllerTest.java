@@ -4,8 +4,8 @@ import io.vpv.version.springbootversion.SpringBootVersionMVCTests;
 import io.vpv.version.springbootversion.data.MockDataProvider;
 import io.vpv.version.springbootversion.service.BootVersionService;
 import io.vpv.version.springbootversion.util.DocumentParserUtility;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -27,7 +27,7 @@ public class DependencyControllerTest extends SpringBootVersionMVCTests {
     @Autowired
     private MockMvc mockMvc;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         this.documentParserUtility =
                 mockDataProvider.initMockData(documentParserUtility);

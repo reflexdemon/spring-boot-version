@@ -2,7 +2,8 @@ package io.vpv.version.springbootversion.util;
 
 import io.vpv.version.springbootversion.SpringBootVersionApplicationTests;
 import org.jsoup.nodes.Document;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 
@@ -19,16 +20,18 @@ public class DocumentParserUtilityTest extends SpringBootVersionApplicationTests
     }
 
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void shouldExpectIlllegalArgumetException() {
-
-        Document fromURL = documentParserUtility.getDocumentFromURL(null);
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            Document fromURL = documentParserUtility.getDocumentFromURL(null);
+        });
     }
 
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void shouldExpectRunTimeException() {
-
-        Document fromURL = documentParserUtility.getDocumentFromURL("http://httpbin.org/status/400");
+        Assertions.assertThrows(RuntimeException.class, () -> {
+            Document fromURL = documentParserUtility.getDocumentFromURL("http://httpbin.org/status/400");
+        });
     }
 }
