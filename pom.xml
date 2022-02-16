@@ -14,7 +14,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>11</java.version>
+        <java.version>17</java.version>
         <jsoup-version>1.14.3</jsoup-version>
         <mockito-core-version>4.3.1</mockito-core-version>
         <tiles-jsp-version>3.0.8</tiles-jsp-version>
